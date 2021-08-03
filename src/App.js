@@ -1,24 +1,32 @@
-import logo from './logo.svg';
+import Hello from "./Hello";
 import './App.css';
+import Wrapper from "./Wrapper";
+import Counter from "./Counter";
+import InputSample from "./InputSample";
 
 function App() {
+  const name = "react";
+  const style = {
+    backgroundColor : 'black',
+    color : 'aqua',
+    fontsize : 24,
+    padding : '1rem',
+    marginTop : '10px',
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Wrapper>
+        <Hello name="react" color="red" isSpecial={true}/>
+        <Hello color="pink"/>
+        <div style={style}>{name}</div>
+        <div className="gray-box"></div>
+
+        <div style={style}>Counter.js</div>
+        <Counter />
+
+        <div style={style}>InputSample.js</div>
+        <InputSample />
+    </Wrapper>
   );
 }
 
