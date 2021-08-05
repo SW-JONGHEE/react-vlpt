@@ -3,6 +3,7 @@ import './App.css';
 import Wrapper from "./Wrapper";
 import Counter from "./Counter";
 import InputSample from "./InputSample";
+import List from "./List";
 
 function App() {
   const name = "react";
@@ -26,6 +27,9 @@ function App() {
 
         <div style={style}>InputSample.js</div>
         <InputSample />
+
+        <div style={style}>List.js</div>
+        <List />
     </Wrapper>
   );
 }
