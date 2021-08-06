@@ -19,7 +19,7 @@ function InputSample() {
         const { value, name } = e.target;
 
         setInputs({
-            ... inputs,
+            ...inputs,
             [name] : value
         });
     };
