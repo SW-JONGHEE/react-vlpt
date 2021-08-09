@@ -103,8 +103,8 @@ function App() {
         <div style={style}>List.js</div>
         <List />
 
-        <div style={style}>UserList.js</div>
-        <UserList users={users} onRemove={onRemove}/>
+        {/*<div style={style}>UserList.js</div>
+        <UserList users={users} onRemove={onRemove}/>*/}
 
         <div style={style}>CreateUser.js</div>
         <CreateUser
