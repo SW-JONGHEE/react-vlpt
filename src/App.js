@@ -32,11 +32,17 @@ function App() {
 
   const onChange = useCallback((e) => {
       const { name, value } = e.target;
-      setInputs({
+      // deps에 inputs를 넣어줘야한다.
+      // setInputs({
+      //     ...inputs,
+      //     [name]: value
+      // });
+
+      setInputs(inputs => ({
           ...inputs,
           [name]: value
-      });
-  }, [inputs]);
+      }));
+  }, []);
 
   const [users, setUsers] = useState([
       {
@@ -70,9 +76,10 @@ function App() {
           username,
           email,
       };
-
-      setUsers([...users, user]);
       // setUsers(users.concat(user));
+      // setUsers([...users, user]);
+
+      setUsers(users => users.concat(user));
 
       setInputs({
           username: '',
@@ -80,17 +87,23 @@ function App() {
       });
 
     nextId.current += 1;
-  }, [users, username, email]);
+  }, [username, email]);
 
   const onRemove = useCallback((id) => {
-    setUsers(users.filter(user => user.id !== id ));
-  }, [users]);
+    // setUsers(users.filter(user => user.id !== id ));
+      setUsers(users => users.filter(user => user.id !== id ));
+  }, []);
 
   const onToggle = useCallback(id => {
-      setUsers(users.map(user =>
-        user.id === id ? { ...user, active: !user.active } : user
+      // setUsers(users.map(user =>
+      //   user.id === id ? { ...user, active: !user.active } : user
+      // ));
+
+      setUsers(users => users.map(user =>
+        user.id === id ? {...user, active: !user.active} : user
       ));
-  }, [users]);
+
+  }, []);
 
   const count = useMemo(() => countActiveUsers(users), [users]);
 
