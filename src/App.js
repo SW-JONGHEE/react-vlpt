@@ -1,5 +1,5 @@
 import Hello from "./Hello";
-import './App.css';
+import './App.scss';
 import Wrapper from "./Wrapper";
 import Counter from "./Counter";
 import InputSample from "./InputSample";
@@ -9,6 +9,7 @@ import React, {useCallback, useMemo, useReducer, useRef, useState} from "react";
 import CreateUser from "./CreateUser";
 import useInputs from "./hooks/useInputs";
 import produce from "immer";
+import Button from "./components/Button/Button";
 
 function countActiveUsers(users) {
     console.log('활성 사용자 수를 세는중');
@@ -296,6 +297,11 @@ function App() {
             <UserList users={users} />
             <div>활성사용자 수  : {count}</div>
         </UserDispatch.Provider>
+
+        <div style={style}>Sass</div>
+        <div className="buttons">
+            <Button>BUTTON</Button>
+        </div>
     </Wrapper>
   );
 }
