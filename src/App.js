@@ -5,7 +5,7 @@ import Counter from "./Counter";
 import InputSample from "./InputSample";
 import List from "./List";
 import UserList from "./UserList";
-import {useCallback, useMemo, useReducer, useRef, useState} from "react";
+import React, {useCallback, useMemo, useReducer, useRef, useState} from "react";
 import CreateUser from "./CreateUser";
 import useInputs from "./hooks/useInputs";
 
@@ -86,6 +86,9 @@ function reducer (state, action) {
             return state;
     }
 }
+
+//UserDispatch 라는 이름으로 내보내줍니다.
+export const UserDispatch = React.createContext(null);
 
 
 function App() {
@@ -182,7 +185,7 @@ function App() {
   //
   // const count = useMemo(() => countActiveUsers(users), [users]);
 
-    const [{username, email}, onChange, reset] = useInputs({
+    const [{username, email}, onChange, onReset] = useInputs({
         username: '',
         email: '',
     });
@@ -214,35 +217,35 @@ function App() {
                 email,
             }
         });
-
+        onReset();
         nextId.current += 1;
-    }, [username, email]);
+    }, [username, email, onReset]);
 
 
-    const onToggle = useCallback(id => {
-        // setUsers(users.map(user =>
-        //   user.id === id ? { ...user, active: !user.active } : user
-        // ));
+    // const onToggle = useCallback(id => {
+    //     // setUsers(users.map(user =>
+    //     //   user.id === id ? { ...user, active: !user.active } : user
+    //     // ));
+    //
+    //     // setUsers(users => users.map(user =>
+    //     //   user.id === id ? {...user, active: !user.active} : user
+    //     // ));
+    //
+    //     dispatch({
+    //         type: 'TOGGLE_USER',
+    //         id
+    //     });
+    //
+    // }, []);
 
-        // setUsers(users => users.map(user =>
-        //   user.id === id ? {...user, active: !user.active} : user
-        // ));
-
-        dispatch({
-            type: 'TOGGLE_USER',
-            id
-        });
-
-    }, []);
-
-    const onRemove = useCallback((id) => {
-      // setUsers(users.filter(user => user.id !== id ));
-        dispatch({
-           type: 'REMOVE_USER',
-            id,
-        });
-
-    }, []);
+    // const onRemove = useCallback((id) => {
+    //   // setUsers(users.filter(user => user.id !== id ));
+    //     dispatch({
+    //        type: 'REMOVE_USER',
+    //         id,
+    //     });
+    //
+    // }, []);
 
     const count = useMemo(() => countActiveUsers(users), [users]);
 
@@ -267,14 +270,19 @@ function App() {
         <UserList users={users} onRemove={onRemove}/>*/}
 
         <div style={style}>CreateUser.js</div>
-        <CreateUser
-            username={username}
-            email={email}
-            onChange={onChange}
-            onCreate={onCreate}
-        />
-        <UserList users={users} onRemove={onRemove} onToggle={onToggle}/>
-        <div>활성사용자 수  : {count}</div>
+
+        {/*UserDispatch라는 Context를 만들어서, 어디서든지 dispatch를 꺼내 쓸 수 있도록 준비 해준다*/}
+        <UserDispatch.Provider value={dispatch}>
+            <CreateUser
+                username={username}
+                email={email}
+                onChange={onChange}
+                onCreate={onCreate}
+            />
+            {/*<UserList users={users} onRemove={onRemove} onToggle={onToggle}/>*/}
+            <UserList users={users} />
+            <div>활성사용자 수  : {count}</div>
+        </UserDispatch.Provider>
     </Wrapper>
   );
 }
